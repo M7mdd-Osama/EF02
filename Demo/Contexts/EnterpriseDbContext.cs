@@ -1,5 +1,4 @@
-﻿using EntityframeworkFluentAPIs;
-using Demo.Entities;
+﻿using Demo.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,6 +58,17 @@ namespace Demo.Contexts
 
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
 
+            modelBuilder.Entity<Department>()
+                        .HasMany(D => D.Employees)
+                        .WithOne(E => E.Department)
+                        .HasForeignKey(E => E.DepartmentsDeptId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<Employee>()
+            //            .HasOne(E => E.Department)
+            //            .WithMany(D => D.Employees)
+            //            .HasForeignKey(E => E.DepartmentsDeptId)
+            //            .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
