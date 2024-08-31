@@ -45,6 +45,11 @@ namespace Demo.Entities
         public string Phonenumber { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [ForeignKey("Department")]
+        public int? DepartmentsDeptId { get; set; }
+
+        public Department Department { get; set; }
     }
 
 }
