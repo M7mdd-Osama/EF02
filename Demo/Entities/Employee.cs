@@ -22,7 +22,7 @@ namespace Demo.Entities
     //}
     #endregion
 
-    internal class Employee
+    public class Employee
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -47,9 +47,9 @@ namespace Demo.Entities
         public string Password { get; set; }
 
         [ForeignKey("Department")]
-        public int? DepartmentsDeptId { get; set; }
-
-        public Department Department { get; set; }
+        public int? DepartmentId { get; set; }
+        [InverseProperty("Employees")]
+        public virtual Department Department { get; set; }
     }
 
 }

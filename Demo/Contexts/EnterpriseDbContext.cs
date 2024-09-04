@@ -12,7 +12,7 @@ namespace Demo.Contexts
     internal class EnterpriseDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer("Server = . ; Database = Enterprise; Trusted_Connection = true ");
+            => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server = . ; Database = Enterprise; Trusted_Connection = true ; trustServerCertificate = true", X => X.UseDateOnlyTimeOnly());
         //optionsBuilder.UseSqlServer("Data source = . ; Initial Catalog = Enterprise; Integrated Security = true "); //Old
 
         public DbSet<Employee> Employees { get; set; }
@@ -63,7 +63,7 @@ namespace Demo.Contexts
             modelBuilder.Entity<Department>()
                         .HasMany(D => D.Employees)
                         .WithOne(E => E.Department)
-                        .HasForeignKey(E => E.DepartmentsDeptId)
+                        .HasForeignKey(E => E.DepartmentId)
                         .OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<Student>()
@@ -89,6 +89,10 @@ namespace Demo.Contexts
             modelBuilder.Entity<Course>()
                         .HasMany(C => C.CourseStudents)
                         .WithOne(SC => SC.Course);
+
+            modelBuilder.Entity<Department>()
+                        .Property(D => D.DateOfCreation)
+                        .HasDefaultValueSql("GETDATE()");
 
 
             base.OnModelCreating(modelBuilder);
