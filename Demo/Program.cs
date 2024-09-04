@@ -8,6 +8,7 @@ namespace Demo
     {
         static void Main(string[] args)
         {
+            #region Demo02
             //EnterpriseDbContext dbContext = new EnterpriseDbContext();
             //dbContext.Database.Migrate();
 
@@ -25,26 +26,26 @@ namespace Demo
             //    //CRUD
             //}
 
-            using EnterpriseDbContext dbContext = new EnterpriseDbContext();
-            Employee Emp01 = new Employee()
-            {
-                Name = "Mohamed",
-                Salary = 4_000,
-                Age = 25,
-                Email = "Mohamed@gmail.com",
-                Password = "password",
-                Phonenumber = "12343424"
-            };
-            Employee Emp02 = new Employee()
-            {
-                Name = "Ali",
-                Salary = 5_000,
-                Age = 26,
-                Email = "Ali@gmail.com",
-                Password = "password2",
-                Phonenumber = "12343424"
+            //using EnterpriseDbContext dbContext = new EnterpriseDbContext();
+            //Employee Emp01 = new Employee()
+            //{
+            //    Name = "Mohamed",
+            //    Salary = 4_000,
+            //    Age = 25,
+            //    Email = "Mohamed@gmail.com",
+            //    Password = "password",
+            //    Phonenumber = "12343424"
+            //};
+            //Employee Emp02 = new Employee()
+            //{
+            //    Name = "Ali",
+            //    Salary = 5_000,
+            //    Age = 26,
+            //    Email = "Ali@gmail.com",
+            //    Password = "password2",
+            //    Phonenumber = "12343424"
 
-            };
+            //};
             //Console.WriteLine(Emp01.EmpId);
             //Console.WriteLine(Emp02.EmpId);
 
@@ -95,6 +96,41 @@ namespace Demo
             //dbContext.SaveChanges();
             #endregion
             #endregion
+
+            #endregion
+
+            #region Explicit Loading
+            //using EnterpriseDbContext DbContext = new EnterpriseDbContext();
+
+            //var Employee = (from E in DbContext.Employees
+            //                where E.EmpId == 5
+            //                select E).FirstOrDefault();
+            //DbContext.Entry(Employee).Reference(E => E.Department).Load();
+
+            //Console.WriteLine($"{Employee?.Name ?? "Not Found"} :: {Employee?.Department?.Name ?? "NAN"}"); 
+            #endregion
+
+            #region Eager Loading
+            //using EnterpriseDbContext DbContext = new EnterpriseDbContext();
+
+            //var Employee = (from E in DbContext.Employees.Include(E => E.Department)
+            //                where E.EmpId == 5
+            //                select E).FirstOrDefault();
+
+            //Console.WriteLine($"{Employee?.Name ?? "Not Found"} :: {Employee?.Department?.Name ?? "NAN"}");
+
+            #endregion
+
+            #region Lazy Loading
+            //using EnterpriseDbContext DbContext = new EnterpriseDbContext();
+
+            //var Employee = (from E in DbContext.Employees
+            //                where E.EmpId == 5
+            //                select E).FirstOrDefault();
+
+            //Console.WriteLine($"{Employee?.Name ?? "Not Found"} :: {Employee?.Department?.Name ?? "NAN"}");
+            #endregion
+
 
 
         }

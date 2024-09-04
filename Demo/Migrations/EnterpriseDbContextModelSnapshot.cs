@@ -47,8 +47,10 @@ namespace Demo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"), 10L, 10);
 
-                    b.Property<DateTime>("DateOfCreation")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DateOfCreation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Name")
                         .ValueGeneratedOnAdd()
@@ -73,7 +75,7 @@ namespace Demo.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DepartmentsDeptId")
+                    b.Property<int?>("DepartmentId")
                         .IsRequired()
                         .HasColumnType("int");
 
@@ -99,7 +101,7 @@ namespace Demo.Migrations
 
                     b.HasKey("EmpId");
 
-                    b.HasIndex("DepartmentsDeptId");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Employees");
                 });
@@ -159,7 +161,7 @@ namespace Demo.Migrations
                 {
                     b.HasOne("Demo.Entities.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentsDeptId")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
